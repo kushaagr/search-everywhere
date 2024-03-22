@@ -1,0 +1,30 @@
+[
+    {
+        "of": "x", 
+        "container": "x-results-list", 
+        "template": "x-content-template",
+        "properties": {
+            ".classSelector": "corresponding_mapping_in_data_object", 
+            ".classSelector2": "corresponding_mapping_in_data_object",
+            "...": "[...]"
+        }, 
+        "attributes": {
+            "href": "mapping to url in data object",
+            "...": "mapping to url in data object"
+        }
+    },
+    {
+      "of": "duckduckgo", 
+      "container": "duckduckgo-results-list", 
+      "template": "duckduckgo-content-template",
+      "properties": {
+        ".abstract": "abstract",
+        ".title": "title",
+        ".url": "url",
+      }, 
+      "attributes": {
+        "a": [ {"href": "url"} ]
+      }
+    },
+    // , { ... }
+]

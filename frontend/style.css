@@ -1,0 +1,244 @@
+:root {
+    --search-button-width: 8ch;
+}
+
+* {
+    box-sizing: border-box;
+    border-radius: .5ch;
+/*    border-radius: 5px;*/
+/*    
+    margin: 0;
+    padding: 0;
+*/
+}
+
+body {
+    margin: 0;
+/*    padding-inline: .5rem;*/
+    overflow-y: hidden;
+}
+
+main {
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+}
+
+ul {
+    padding: 0;
+}
+
+.search_container {
+    width: 100%;
+    display: flex;
+/*    padding: 1ch;*/
+}
+
+.search_container__search_bar {
+    width: calc(100% - var(--search-button-width));
+}
+
+.search_container__search_button {
+    width: var(--search-button-width);
+}
+
+.nav {
+    margin-block: .5rem;
+/*    padding-inline: .5rem;*/
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.link-button {
+    display: inline-block;
+    padding-block: 0;
+/*    scroll-behavior: smooth;*/
+}
+
+.nav__scroll_buttons {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 1ch;
+    margin: 0;
+/*    scroll-behavior: smooth;*/
+}
+
+
+
+.results_container {
+    display: flex;
+    flex: row nowrap;
+}
+
+.long-narrow-container {
+    max-height: 90vh;
+    min-height: 89vh;
+    min-width: 38ch;
+    max-width: 38ch;
+/*    width: calc(38*8px);*/
+/*    min-width: 304px;*/
+    overflow-y: auto;
+}
+
+.container_title {
+    border-bottom: 1px solid gray;
+    font-family: sans-serif;
+    color: #999;
+    padding: 4px;
+    position: sticky;
+    top: 0;
+    background-color: whitesmoke;
+    z-index: 9;
+/*    position: relative;*/
+
+}
+
+li {
+    display: block;
+    padding: .5rem;
+}
+
+.fade {
+  position: relative;
+  overflow: hidden;
+/*  height: 3.6em;*/
+  /* exactly three lines */
+/*  height: calc(1.2em * 4);*/
+}
+
+.fade::after {
+  content: "";
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 1.2em;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, .8) 50%);
+}
+
+
+.url {
+/*    min-height: 1rem;*/
+    overflow: hidden;
+    white-space: nowrap;
+/*    background-color: #ddd;*/
+}
+
+.title, .full-name {
+    width: 100%;
+    min-height: 1.5rem;
+/*    background-color: currentColor;*/
+/*    background-color: rgba(44, 44, 44);*/
+}
+
+.abstract {
+/*    min-height: 5rem;*/
+/*    max-height: 5rem;*/
+/*    background-color: #bbb;*/
+/*    white-space: nowrap;*/
+
+    --lines: 4;
+    height: calc(1.2em * var(--lines));
+    display: -webkit-box;
+    -webkit-line-clamp: var(--lines);
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hyperlink_container, .permalink {
+    display: block;
+}
+
+.wide-broad-thumbnail {
+    display: block;
+/*    width: 30ch;*/
+/*    min-height: 8rem;*/
+/*    height: 8rem;*/
+/*    width: auto;*/
+/*    min-width: 100%;*/
+/*    height: auto;*/
+    
+
+    width: auto;
+/*    width: 100%;*/
+    height: 19ch;
+    aspect-ratio: 16 / 9;
+/*    aspect-ratio: 3 / 2 ;*/
+/*    background-color: #eee;*/
+    object-fit: cover;
+}
+
+.description {
+    min-height: 2rem;
+    max-height: 2rem;
+/*    background-color: #bbb;*/
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.reddit-search-result-box {
+    display: flex;
+    flex-flow: row nowrap;
+/*    align-items: center;*/
+    align-items: flex-start;
+/*    justify-content: flex-start;*/
+}
+
+.no-img {
+    height: 0 !important;
+    display: none;
+}
+
+.short-square-thumbnail {
+    aspect-ratio: 1/1;
+/*    height: 50px;*/
+/*    width: min-content;*/
+/*    max-height: 50px;*/
+/*    max-height: 100%;*/
+
+/*    max-height: 4.5rem;*/
+
+/*    height: auto;*/
+/*    max-width: 4.5rem;*/
+    height: 4.5rem;
+    width: auto;
+/*    outline: 2px solid hotpink;*/
+    object-fit: cover;
+/*    object-fit: contain;*/
+    margin-inline-start: 1ch;
+    float: left;
+}
+
+.title--reddit {
+    min-height: 3rem;
+/*    margin-block-start: 0;*/
+/*    height: 100%;*/
+/*    width: calc(100% - 4.5rem - 2ch);*/
+    margin: 0;
+    margin-inline-start: 1ch;
+    width: 100%;
+}
+
+.subreddit, .language {
+    display: inline-block;
+    min-height: 1rem;
+/*    background-color: #bbb;*/
+    width: 8rem;
+    margin: 0;
+    margin-block: .5ch;
+/*    margin-inline-start: 1ch;*/
+}
+
+.language {
+    margin-inline: 0;
+    display: block;
+}
+
+.clear {
+    clear: right;
+    display: block;
+}

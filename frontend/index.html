@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="sample-response-data.js" type="module" defer></script>
+    <script src="script.js" type="module" defer></script>
+    <title>Search Page</title>
+</head>
+<body>
+    <header class="search_container">
+        <input type="search" name="q" id="searchbar" class="search_container__search_bar">
+        <button type="submit" class="search_container__search_button">Search</button>
+    </header>
+    <nav class="nav">
+        <ul class="nav__scroll_buttons">
+            <li class="link-button"><a href="#ddg">ddg</a></li>
+            <li class="link-button"><a href="#ytb">ytb</a></li>
+            <li class="link-button"><a href="#rdt">rdt</a></li>
+            <li class="link-button"><a href="#gtb">gtb</a></li>
+        </ul>
+    </nav>
+    <main id="main-container">
+        <div id="full-height-container" class="results_container">
+            <!-- DuckDuckGo -->
+            <section class="long-narrow-container" id="ddg">
+                <h2 class="container_title">DuckDuckGo</h2>
+                <ul id="duckduckgo-results-list">
+                    <template id="duckduckgo-content-template">
+                        <li>
+                            <a href="">
+                                <p class="url"></p>
+                                <h3 class="title"></h3>
+                                <p class="abstract fade"></p>
+                            </a>
+                        </li>
+                    </template>
+                </ul>
+            </section>
+
+            <!-- Youtube -->
+            <section class="long-narrow-container" id="ytb">
+                <h2 class="container_title">Youtube</h2>
+                <ul id="youtube-results-list">
+                    <template id="youtube-content-template">
+                        <li>
+                            <a href="https://www.youtube.com/watch?v=" class="hyperlink_container">
+                                <img src="" alt="Youtube thumnbail" class="wide-broad-thumbnail">
+                                <h3 class="title"></h3>
+                                <p class="description"></p>
+                            </a>
+                        </li>
+                    </template>
+                </ul>
+            </section>
+
+            <!-- Reddit -->
+            <section class="long-narrow-container" id="rdt">
+                <h2 class="container_title">Reddit</h2>
+                <ul id="reddit-results-list">
+                    <template id="reddit-content-template">
+                        <li>
+                            <a href="https://www.reddit.com" class="permalink reddit-search-result-box">
+                                <img src="" alt="" class="short-square-thumbnail">
+                                <!-- <img src="https://freelogopng.com/images/all_img/1658834630reddit-logo%20(1).png" alt="" class="short-square-thumbnail"> -->
+                                <h3 class="title title--reddit"></h3>
+                            </a>
+                            <span>r/</span><p class="subreddit"></p>
+                        </li>
+                    </template>
+                </ul>
+            </section>
+
+            <!-- Github -->
+            <section class="long-narrow-container" id="ghb">
+                <h2 class="container_title">Github</h2>
+                <ul id="github-results-list">
+                    <template id="github-content-template">
+                        <li>
+                            <a href="" class="url hyperlink_container">
+                                <h1 class="full-name"></h1>
+                                <p class="description"></p>
+                                <span class="language"></span>
+                            </a>
+                        </li>
+                    </template>
+                </ul>
+            </section>
+
+
+            <template id="long-narrow-container-template">
+                <section class="long-narrow-container" id="">
+                    <h2 class="container_title"></h2>
+                    <ul>
+                    </ul>
+                </section>
+            </template>
+        </div>  
+    </main>
+</body>
+</html>
