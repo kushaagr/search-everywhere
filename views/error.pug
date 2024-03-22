@@ -1,0 +1,14 @@
+doctype html
+html(lang="en")
+  head
+    title Error
+    link(rel="stylesheet", href="/css/error.css")
+  body
+    .error-container
+      h1 Error
+      p Type: #{errorDetails.type}
+      p Title: #{errorDetails.title}
+      p Status: #{errorDetails.status}
+      p Detail: #{errorDetails.detail}
+      p Instance: #{errorDetails.instance}
+      a(href="/" class="back-home") Go Back Home

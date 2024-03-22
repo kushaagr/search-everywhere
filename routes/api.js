@@ -5,7 +5,7 @@ const router = express.Router();
 // const search_controller = require("./searchController");
 router.get("/search", search_results_get, (err, req, res, next) => {
     const problemDetails = {
-        type: "https://example.com/probs/api-error",
+        type: "/probs/api-error",
         title: "API Error",
         status: 500,
         detail: err.message,
