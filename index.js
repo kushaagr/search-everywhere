@@ -1,11 +1,11 @@
-// const express = require('express');
 import express from 'express';
+import { rateLimit } from 'express-rate-limit'
+import apiRouter from './routes/api.js';
+import problemTypeRouter from './routes/descriptions.js';
 
 // const apiRouter = require('./searchpage');
 // import router from './searchpage.js';
 // import { default as apiRouter } from './routes/api.js';
-import apiRouter from './routes/api.js';
-import problemTypeRouter from './routes/descriptions.js';
 
 const app = express();
 const port = parseInt(process.env.PORT) || 3000;
@@ -20,6 +20,17 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+
+const limiter = rateLimit({
+    windowMs: 24 * 60 * 60 * 1000, // 24 hrs
+    limit: 100, // Limit each IP to 100 requests per `window` (here, per 24 hrs.
+    standardHeaders: 'draft-7', // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+})
+
+// Apply the rate limiting middleware to all requests.
+app.use(limiter);
 
 // app.get('/', (req, res) => {
 //     res.send('Successful boot!');
