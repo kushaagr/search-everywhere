@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="sample-response-data.js" type="module" defer></script>
     <script src="script.js" type="module" defer></script>
+    <script src="https://kit.fontawesome.com/4fafcd2e55.js" crossorigin="anonymous"></script>
     <title>Search Page</title>
 </head>
 <body>
@@ -15,10 +16,10 @@
     </header>
     <nav class="nav">
         <ul class="nav__scroll_buttons">
-            <li class="link-button"><a href="#ddg">ddg</a></li>
-            <li class="link-button"><a href="#ytb">ytb</a></li>
-            <li class="link-button"><a href="#rdt">rdt</a></li>
-            <li class="link-button"><a href="#gtb">gtb</a></li>
+            <li class="link-button"><i class="fa-lg fa-solid fa-magnifying-glass"></i></li>
+            <li class="link-button"><i class="fa-lg fa-brands fa-youtube"></i></li>
+            <li class="link-button"><i class="fa-lg fa-brands fa-reddit"></i></li>
+            <li class="link-button"><i class="fa-lg fa-brands fa-github"></i></li>
         </ul>
     </nav>
     <main id="main-container">
@@ -66,7 +67,9 @@
                                 <!-- <img src="https://freelogopng.com/images/all_img/1658834630reddit-logo%20(1).png" alt="" class="short-square-thumbnail"> -->
                                 <h3 class="title title--reddit"></h3>
                             </a>
-                            <span>r/</span><p class="subreddit"></p>
+                            <span class="pill">r/<strong>
+                                <p class="subreddit"></p>
+                            </strong></span>
                         </li>
                     </template>
                 </ul>
@@ -78,7 +81,7 @@
                 <ul id="github-results-list">
                     <template id="github-content-template">
                         <li>
-                            <a href="" class="url hyperlink_container">
+                            <a href="" class="hyperlink_container">
                                 <h1 class="full-name"></h1>
                                 <p class="description"></p>
                                 <span class="language"></span>
