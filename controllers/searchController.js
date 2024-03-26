@@ -1,23 +1,7 @@
 import { spawn } from 'node:child_process';
+import DDG from 'duck-duck-scrape';
 import axios from 'axios';
 import 'dotenv/config';
-
-
-// const search_results_get = function(req, res, next) {
-//     console.log('req.query = ', req.query);
-//     if (req.query.q != undefined && req.query.q.trim()) {
-//         const searchQuery = req.query.q;
-//         console.log(`Query for ${searchQuery}`);
-//         res.send({
-//             'searchQuery': searchQuery,
-//             'timestamp': Date.now(),
-//         });
-//     } else 
-//         // res.send({
-//         //     'timestamp': Date.now(),
-//         // });
-//         res.redirect('/')
-// }
     
 const search_results_get = (req, res, next) => {
     if (!req.query.q || req.query.q.trim() === '') {
@@ -74,46 +58,29 @@ async function fetchResponse(req) {
     } catch (error) {
         console.error(error);
         throw error;
-        // next();
-        // return {};
+
     }
 
     
 }
 
 function fetchDuckduckgo(query, limit=1) {
-    return new Promise((resolve, reject) => {
+    return new Promise( async (resolve, reject) => {
         limit = limit * 1;
         const per_page = Number.isInteger(limit) ? limit : 1;
-        const ddgr = spawn('ddgr', ['--num', `${per_page}`, '--json', `${query}`]);
 
-        let output = {};
-        ddgr.stdout.on('data', (data) => {
-            output = JSON.parse(data);
-        });
+        try {
+            const searchResults = await DDG.search(query, {
+              safeSearch: DDG.SafeSearchType.STRICT
+            });
 
-        ddgr.on('exit', (code, signal) => {
-            resolve({ 'duckduckgo': output });
-            // if (code === 0) {
-            //     resolve({ 'duckduckgo': output }); // Process exited sucjcessfully, resolve with output
-            // } else {
-            //     reject(new Error(`Process ${ddgr} exited with error code ${code}`)); // Process error, reject promise
-            // }
-        });
-
-        // ddgr.stderr.on('data', (stderr) => {
-        //     console.log(`stderr: ${stderr}`);
-        //     reject(stderr)
-        // });
-
-        // ddgr.on('error', (error) => {
-        //     console.error(`error: ${error.message}`);
-        //     reject(error.message);
-        // });
-
-        // ddgr.on('close', (code) => {
-        //     console.log(`child process exited with code ${code}`);
-        // });
+            if (searchResults.noResults === true) {
+                throw new Error("No results");
+            }
+            resolve({'duckduckgo': searchResults.results.slice(0, per_page)});
+        } catch (error) {
+            reject(error);
+        }
 
     });
 }

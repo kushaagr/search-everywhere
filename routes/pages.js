@@ -10,6 +10,7 @@ router.get("/", (req, res) => {
     } else {
         fetchResponse(req).then((response) => {
             console.log(response['duckduckgo'] ?? response['duckduckgo'].slice(0, 3));  
+            // console.log(response['duckduckgo']);
             // res.send(response['duckduckgo'].slice(0, 3));
             res.render("search", { searchresults: response });
         });   

@@ -4,7 +4,7 @@ const metadetails = [
     "container": "duckduckgo-results-list", 
     "template": "duckduckgo-content-template",
     "properties": {
-      ".abstract": "abstract",
+      ".abstract": "description",
       ".title": "title",
       ".url": "url",
     }, 
