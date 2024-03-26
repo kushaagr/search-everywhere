@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
             console.log(response['reddit'] ? response['reddit'].slice(0, 3) : null); 
             // console.log(response['duckduckgo']);
             // res.send(response['duckduckgo'].slice(0, 3));
-            res.render("search", { searchresults: response });
+            res.render("search", { searchresults: response, searchquery: req.query.q});
         }).catch(err => {
             console.error(`error.response = ${err.response}`)
         });   

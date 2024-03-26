@@ -71,6 +71,22 @@ for (const [i, button] of Array.from(buttons).entries()) {
 }
 
 
+// const buttons = document.querySelectorAll('.link-button');
+for (const button of buttons) {
+  button.addEventListener('click', function() {
+    // this.classList.remove('pulse');
+    const animationMs = 400;
+    // const b = document.createElement('span');
+    // button.append(b);
+    const b = this;
+    b.classList.add('pulse');
+    // this.style.WebkitAnimationPlayState = "running";
+    setTimeout(() => {
+      b.classList.remove('pulse')
+    }, animationMs) 
+  })
+};
+
 
 Element.prototype.appendInAttribute = function (attribute, value) {
   const currentValue = this.getAttribute(attribute) || '';
