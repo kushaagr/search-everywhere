@@ -12,8 +12,9 @@ html(lang="en")
     title Search Page
   body
     header.search_container
-      input.search_container__search_bar(type="search", name="q", id="searchbar")
-      button.search_container__search_button(type="submit") Search
+      form(action="/", method="get")
+        input.search_container__search_bar(type="search", name="q", id="searchbar")
+        button.search_container__search_button(type="submit") Search
     nav.nav
       ul.nav__scroll_buttons
         li.link-button
@@ -50,7 +51,7 @@ html(lang="en")
             each result in searchresults.reddit
               li
                 a.permalink.reddit-search-result-box(href="https://www.reddit.com"+result.data.permalink)
-                  if result.data.thumbnail != "self"
+                  if result.data.thumbnail != "self" && result.data.thumbnail != "default" && result.data.thumbnail != "spoiler"
                     img.short-square-thumbnail(src=result.data.thumbnail)
                   else
                     img.no-img
@@ -58,12 +59,14 @@ html(lang="en")
                 span.pill= "r/"
                   strong
                     p.subreddit= result.data.subreddit
+                if result.data.selftext
+                  p.selftext= result.data.selftext
         section.long-narrow-container#git
           h2.container_title Github
           ul#github-results-list
             each result in searchresults.github
               li
                 a.hyperlink_container(href=result.html_url)
-                  h1.full-name=result.full_name
+                  h3.full-name=result.full_name
                   p.description=result.description
                   span.language=result.language

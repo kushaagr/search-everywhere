@@ -10,5 +10,6 @@ html(lang="en")
     title Search Page
   body
     header.search_container
-      input.search_container__search_bar(type="search", name="q", id="searchbar")
-      button.search_container__search_button(type="submit") Search
+      form(action="/", method="get")
+        input.search_container__search_bar(type="search", name="q", id="searchbar")
+        button.search_container__search_button(type="submit") Search
