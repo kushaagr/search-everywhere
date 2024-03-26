@@ -1,0 +1,14 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href="css/style.css")
+    script(src="sample-response-data.js", type="module", defer)
+    script(src="scripts/script.js", type="module", defer)
+    script(src="https://kit.fontawesome.com/4fafcd2e55.js", crossorigin="anonymous")
+    title Search Page
+  body
+    header.search_container
+      input.search_container__search_bar(type="search", name="q", id="searchbar")
+      button.search_container__search_button(type="submit") Search
