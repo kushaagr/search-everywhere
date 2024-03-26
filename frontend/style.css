@@ -377,5 +377,6 @@ li:active .fade::after {
     color: white;
     padding-inline: 1ch;
     padding-inline-end: 1.25ch;
-/*    padding-block: 2px;*/
+
+    padding-block-end: 2px;
 }

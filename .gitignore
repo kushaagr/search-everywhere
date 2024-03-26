@@ -5,6 +5,8 @@ frontend/**/
 frontend/base*
 .yori_history
 notes.md
+testserver.js
+*.sublime*
 
 
 # Logs

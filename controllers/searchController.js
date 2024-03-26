@@ -18,8 +18,8 @@ import 'dotenv/config';
 //         // });
 //         res.redirect('/')
 // }
-
-const search_results_get = async function(req, res, next) {
+    
+const search_results_get = (req, res, next) => {
     if (!req.query.q || req.query.q.trim() === '') {
        // Define the problem details according to RFC 9457
        const problemDetails = {
@@ -35,43 +35,51 @@ const search_results_get = async function(req, res, next) {
        res.status(400).type('application/problem+json').send(problemDetails);
     } else {
        // res.send(`Searching for: ${req.query.q}`);
-
-        const query = req.query.q;
-        const per_page = (req.query.per_page || 15) * 1;
-
-        try {
-            const results = await Promise.all([
-                fetchDuckduckgo(query, per_page).catch(err => {
-                    throw new Error(`Error fetching Duckduckgo results: ${err}`);
-                }),
-                fetchGithub(query, per_page).catch(err => {
-                    throw new Error(`Error fetching Github results: ${err}`);
-                }),
-                fetchReddit(query, per_page).catch(err => {
-                    throw new Error(`Error fetching Reddit results: ${err}`);
-                }),
-                fetchYoutube(query, per_page).catch(err => {
-                    throw new Error(`Error fetching Youtube results: ${err}`);
-                }),
-            ]);
-
-            const flatResponse = {};
-            for (const item of results) {
-                for (const [key, value] of Object.entries(item)) {
-                    flatResponse[key] = value;
-                }
-            }
-            res.send(flatResponse);
-            
-        } catch (error) {
-            console.error(error);
-            next();
-        }
-
+        fetchResponse(req, res).then(result => {
+            res.send(result);
+        }).catch(next);
     }
-    
 }
 
+async function fetchResponse(req) {
+
+    const query = req.query.q;
+    const per_page = (req.query.per_page || 15) * 1;
+
+    try {
+        const results = await Promise.all([
+            fetchDuckduckgo(query, per_page).catch(err => {
+                throw new Error(`Error fetching Duckduckgo results: ${err}`);
+            }),
+            fetchGithub(query, per_page).catch(err => {
+                throw new Error(`Error fetching Github results: ${err}`);
+            }),
+            fetchReddit(query, per_page).catch(err => {
+                throw new Error(`Error fetching Reddit results: ${err}`);
+            }),
+            fetchYoutube(query, per_page).catch(err => {
+                throw new Error(`Error fetching Youtube results: ${err}`);
+            }),
+        ]);
+
+        const flatResponse = {};
+        for (const item of results) {
+            for (const [key, value] of Object.entries(item)) {
+                flatResponse[key] = value;
+            }
+        }
+        // res.send(flatResponse);
+        return flatResponse;
+        
+    } catch (error) {
+        console.error(error);
+        throw error;
+        // next();
+        // return {};
+    }
+
+    
+}
 
 function fetchDuckduckgo(query, limit=1) {
     return new Promise((resolve, reject) => {
@@ -85,11 +93,12 @@ function fetchDuckduckgo(query, limit=1) {
         });
 
         ddgr.on('exit', (code, signal) => {
-          if (code === 0) {
-            resolve({ 'duckduckgo': output }); // Process exited sucjcessfully, resolve with output
-          } else {
-            reject(new Error(`Process ${workerId} exited with error code ${code}`)); // Process error, reject promise
-          }
+            resolve({ 'duckduckgo': output });
+            // if (code === 0) {
+            //     resolve({ 'duckduckgo': output }); // Process exited sucjcessfully, resolve with output
+            // } else {
+            //     reject(new Error(`Process ${ddgr} exited with error code ${code}`)); // Process error, reject promise
+            // }
         });
 
         // ddgr.stderr.on('data', (stderr) => {
@@ -180,4 +189,4 @@ function fetchReddit(query, limit=1) {
 }
 
 
-export { search_results_get }
+export { search_results_get, fetchResponse }
