@@ -1,7 +1,9 @@
 import express from 'express';
 import { rateLimit } from 'express-rate-limit'
+
 import apiRouter from './routes/api.js';
 import problemTypeRouter from './routes/descriptions.js';
+import pageRouter from './routes/pages.js'
 
 // const apiRouter = require('./searchpage');
 // import router from './searchpage.js';
@@ -9,6 +11,8 @@ import problemTypeRouter from './routes/descriptions.js';
 
 const app = express();
 const port = parseInt(process.env.PORT) || 3000;
+
+app.set('view engine', 'pug');
 
 app.use(express.static('public'));
 
@@ -35,7 +39,10 @@ app.use(limiter);
 // app.get('/', (req, res) => {
 //     res.send('Successful boot!');
 // });
-
+// app.get("/helloworld", (req, res) => {
+//     res.render("helloworld");
+// })
+app.use("/", pageRouter);
 app.use("/api", apiRouter);
 app.use("/prob", problemTypeRouter);
 
