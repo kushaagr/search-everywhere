@@ -1,3 +1,8 @@
+/*@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap')*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+
 :root {
     --search-button-width: 8ch;
     --mx: 1ch;
@@ -18,6 +23,14 @@ body {
     margin: 0;
 /*    padding-inline: .5rem;*/
     overflow-y: hidden;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+
+/*    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+*/
 }
 
 main {
@@ -43,7 +56,7 @@ ul {
 }
 
 .search_container__search_bar {
-    width: calc(100% - var(--mx));
+    width: calc(100% - var(--mx, 0));
     height: 2.75rem;
     font-size: 1em;
 /*    border-radius: 1ch;*/
@@ -144,9 +157,9 @@ ul {
     height: 80vh;
 /*    height: calc(99vh -2.75rem -4*var(--mx));*/
 /*    height: calc(90vh -2.75rem - 1.25rem);*/
-    min-width: 38ch;
-    max-width: 38ch;
-/*    width: calc(38*8px);*/
+    min-width: calc(38*8px);
+/*    max-width: 38ch;*/
+    width: calc(38*8px);
 /*    min-width: 304px;*/
     overflow-y: auto;
 }
