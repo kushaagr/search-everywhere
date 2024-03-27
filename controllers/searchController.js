@@ -25,88 +25,100 @@ const search_results_get = (req, res, next) => {
     }
 }
 
-async function fetchResponse(req) {
+function fetchResponse(req) {
 
     const query = req.query.q;
-    const per_page = (req.query.per_page || 15) * 1;
+    let per_page = (req.query.per_page || 15) * 1;
+    if (per_page < 0) {
+        per_page = 15;
+    }
+    
+    return Promise.allSettled([
+        fetchDuckduckgo(query, per_page).catch(err => {
+            throw new Error(`Error fetching Duckduckgo results: ${err}`);
+        }),
+        fetchGithub(query, per_page).catch(err => {
+            throw new Error(`Error fetching Github results: ${err}`);
+        }),
+        fetchReddit(query, per_page).catch(err => {
+            throw new Error(`Error fetching Reddit results: ${err}`);
+        }),
+        fetchYoutube(query, per_page).catch(err => {
+            throw new Error(`Error fetching Youtube results: ${err}`);
+        }),
 
-    try {
-        const results = await Promise.all([
-            fetchDuckduckgo(query, per_page).catch(err => {
-                throw new Error(`Error fetching Duckduckgo results: ${err}`);
-            }),
-            fetchGithub(query, per_page).catch(err => {
-                throw new Error(`Error fetching Github results: ${err}`);
-            }),
-            fetchReddit(query, per_page).catch(err => {
-                throw new Error(`Error fetching Reddit results: ${err}`);
-            }),
-            fetchYoutube(query, per_page).catch(err => {
-                throw new Error(`Error fetching Youtube results: ${err}`);
-            }),
-        ]);
-
+    ]).then(results => {
         const flatResponse = {};
+        const errors = [];
+        // Convert array of Objects to single object.
         for (const item of results) {
-            for (const [key, value] of Object.entries(item)) {
-                flatResponse[key] = value;
+            if (item.status === 'fulfilled') {
+                const data = item.value;
+
+                for (const [key, value] of Object.entries(data)) {
+                    flatResponse[key] = value;
+                }
+            } else {
+                errors.push(item.reason);
             }
         }
-        // res.send(flatResponse);
+        if (errors && errors.length !== 0) console.error(errors);
         return flatResponse;
-        
-    } catch (error) {
-        console.error(error);
+        // res.send(flatResponse);
+
+    }).catch(error => {
         throw error;
-
-    }
-
+    })
     
 }
 
 function fetchDuckduckgo(query, limit=1) {
-    return new Promise( async (resolve, reject) => {
+    return new Promise( (resolve, reject) => {
         limit = limit * 1;
         const per_page = Number.isInteger(limit) ? limit : 1;
 
-        try {
-            const searchResults = await DDG.search(query, {
-              safeSearch: DDG.SafeSearchType.STRICT
-            });
-
+        DDG.search(query, {
+          safeSearch: DDG.SafeSearchType.STRICT
+        }).then(searchResults => {
             if (searchResults.noResults === true) {
-                throw new Error("No results");
+                const error =  new Error("No results for Duckduckgo");
+                reject(error)
             }
             resolve({'duckduckgo': searchResults.results.slice(0, per_page)});
-        } catch (error) {
+        }).catch(error => {
             reject(error);
-        }
+        })
+
 
     });
 }
 
 
 function fetchGithub(query, limit=1) {
-    return new Promise( async (resolve, reject) => {
+    return new Promise( (resolve, reject) => {
         limit = limit * 1;
         query = encodeURIComponent(query);
         const page_num = 1;
         const per_page = Number.isInteger(limit) ? limit : 1;
-        try {
-            const response = await axios.get(`https://api.github.com/search/repositories?q=${query}&per_page=${per_page}&page=${page_num}`);
-            // console.log("Github data:")
-            // console.log(response.status);
-            // console.log(response.data);
-            resolve({ 'github': response.data.items });
-        } catch (error) {
+
+        axios.get(
+            `https://api.github.com/search/repositories?q=${query}&per_page=${per_page}&page=${page_num}`
+        ).then(response => {
+            if (!response.data.items || response.data.items.length === 0) {
+                // console.log("no items for github");
+                reject(new Error("No results for Github"));
+            } else {
+                resolve({ 'github': response.data.items });
+            }
+        }).catch(error => {
             reject(error);
-        }
+        });
         
     })
 }
 
 function fetchYoutube(query, limit=1) {
-    return new Promise( async (resolve, reject) => {
+    return new Promise( (resolve, reject) => {
         limit = limit * 1;
         const per_page = Number.isInteger(limit) ? limit : 1;
 
@@ -126,18 +138,16 @@ function fetchYoutube(query, limit=1) {
           }
         };
 
-        try {
-            const response = await axios.request(options);
+        axios.request(options).then(response => {
             resolve({ 'youtube': response.data.items });
-
-        } catch (error) {
-            console.error(error);
-        }
+        }).catch(error => {
+            reject(error);
+        })
     })
 }
 
 function fetchReddit(query, limit=1) {
-    return new Promise( async (resolve, reject) => {
+    return new Promise( (resolve, reject) => {
         limit = limit * 1;
         const per_page = Number.isInteger(limit) ? limit : 1;
 
@@ -145,12 +155,11 @@ function fetchReddit(query, limit=1) {
         redditSearchUrl.searchParams.append('limit', per_page);
         redditSearchUrl.searchParams.append('q', query);
 
-        try {
-            const response = await axios.get(redditSearchUrl);
+        axios.get(redditSearchUrl).then(response => {
             resolve({ 'reddit': response.data.data.children });
-        } catch (error) {
+        }).catch(error => {
             reject(error);
-        }
+        });
 
     })
 }
