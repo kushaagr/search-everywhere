@@ -48,23 +48,35 @@ app.use("/prob", problemTypeRouter);
 app.use(function(req, res, next) {
     // next(createError(404));
 
-    const problemDetails = {
-        type: "https://example.com/probs/not-found",
-        title: "Not Found",
-        status: 404,
-        detail: "The requested resource could not be found on this server.",
-        instance: req.originalUrl
-    };
-
-    res.status(404).type('application/problem+json').send(problemDetails);
-
-    // res.status(404).send({
-    //   "statusCode": 404,
-    //   "statusMessage": "The requested resource could not be found"
+    if (req.accepts('html')) {
         
-    // })
+        res.status(404).end();
+        // res.render('404', { url: req.url });
+        return;
+    }
+
+    if (req.accepts('json')) {
+        
+        const problemDetails = {
+            type: "https://example.com/probs/not-found",
+            title: "Not Found",
+            status: 404,
+            detail: "The requested resource could not be found on this server.",
+            instance: req.originalUrl
+        };
+        res.status(404).type('application/problem+json').send(problemDetails);
+        // res.status(404).send({
+        //   "statusCode": 404,
+        //   "statusMessage": "The requested resource could not be found"
+        // })
+        return;
+    }
+
+    res.status(404).end("Page not found");
+    // res.sendStatus(404);
+
 });
 
 app.listen(port, () => console.log(
-    `This app is listening on port ${port}.`
+    `This app is listening on port http://localhost:${port}.`
 ));

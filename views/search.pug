@@ -27,44 +27,48 @@ html(lang="en")
         section.long-narrow-container#ddg
           h2.container_title DuckDuckGo
           ul#duckduckgo-results-list
-            each result in searchresults.duckduckgo
-              li
-                a(href=result.url)
-                  p.url= result.url
-                  h3.title!= result.title
-                  p.abstract.fade!= result.description
+            if searchresults.duckduckgo
+              each result in searchresults.duckduckgo
+                li
+                  a(href=result.url)
+                    p.url= result.url
+                    h3.title!= result.title
+                    p.abstract.fade!= result.description
         section.long-narrow-container#ytb
           h2.container_title Youtube
           ul#youtube-results-list
-            each result in searchresults.youtube
-              li
-                a.hyperlink_container(href="https://www.youtube.com/watch?v="+result.id.videoId)
-                  img.wide-broad-thumbnail(src=result.snippet.thumbnails.medium.url)
-                  h3.title= result.snippet.title
-                  p.description= result.snippet.description
+            if searchresults.youtube
+              each result in searchresults.youtube
+                li
+                  a.hyperlink_container(href="https://www.youtube.com/watch?v="+result.id.videoId)
+                    img.wide-broad-thumbnail(src=result.snippet.thumbnails.medium.url)
+                    h3.title= result.snippet.title
+                    p.description= result.snippet.description
         section.long-narrow-container#rdt
           h2.container_title Reddit
           ul#reddit-results-list
-            each result in searchresults.reddit
-              li
-                a.permalink.reddit-search-result-box(href="https://www.reddit.com"+result.data.permalink)
-                  if result.data.thumbnail != "self" && result.data.thumbnail != "default" && result.data.thumbnail != "spoiler"
-                    object.short-square-thumbnail(data=result.data.thumbnail)
-                      img.short-square-thumbnail(src='https://freelogopng.com/images/all_img/1658834630reddit-logo%20(1).png')
-                  else
-                    img.no-img
-                  h3.title.title--reddit!= result.data.title
-                span.pill= "r/"
-                  strong
-                    p.subreddit= result.data.subreddit
-                if result.data.selftext
-                  p.selftext!= result.data.selftext
+            if searchresults.reddit
+              each result in searchresults.reddit
+                li
+                  a.permalink.reddit-search-result-box(href="https://www.reddit.com"+result.data.permalink)
+                    if result.data.thumbnail != "self" && result.data.thumbnail != "default" && result.data.thumbnail != "spoiler"
+                      object.short-square-thumbnail(data=result.data.thumbnail)
+                        img.short-square-thumbnail(src='https://freelogopng.com/images/all_img/1658834630reddit-logo%20(1).png')
+                    else
+                      img.no-img
+                    h3.title.title--reddit!= result.data.title
+                  span.pill= "r/"
+                    strong
+                      p.subreddit= result.data.subreddit
+                  if result.data.selftext
+                    p.selftext!= result.data.selftext
         section.long-narrow-container#git
           h2.container_title Github
           ul#github-results-list
-            each result in searchresults.github
-              li
-                a.hyperlink_container(href=result.html_url)
-                  h3.full-name=result.full_name
-                  p.description=result.description
-                  span.language=result.language
+            if searchresults.github
+              each result in searchresults.github
+                li
+                  a.hyperlink_container(href=result.html_url)
+                    h3.full-name=result.full_name
+                    p.description=result.description
+                    span.language=result.language
