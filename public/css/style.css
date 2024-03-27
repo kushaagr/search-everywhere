@@ -133,7 +133,7 @@ form {
 }
 
 .link-button:active {
-    color: red;
+/*    color: red;*/
 }
 
 .nav__scroll_buttons {
@@ -451,12 +451,12 @@ li:active .fade::after {
 }
 
 /*.pulse:hover,*/
-/*.pulse:active,
+/*.pulse:active,*/
 .pulse:focus {
-  -webkit-animation: pulsev2 1s;
-          animation: pulsev2 1s;
+  -webkit-animation: pulsev2 200ms;
+          animation: pulsev2 200ms;
   box-shadow: 0 0 0 2em transparent;
-}*/
+}
 
 @-webkit-keyframes pulse {
   0% {
@@ -490,12 +490,3 @@ li:active .fade::after {
   }
 }
 
-/*.link-button {
-  color: var(--color);
-  transition: 0.25s;
-}
-
-.link-button:hover, .link-button:focus {
-  border-color: var(--hover);
-  color: #fff;
-}*/

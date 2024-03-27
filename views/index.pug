@@ -9,7 +9,6 @@ html(lang="en")
     script(src="https://kit.fontawesome.com/4fafcd2e55.js", crossorigin="anonymous")
     title Search Page
   body
-    header.search_container
-      form(action="/", method="get")
-        input.search_container__search_bar(type="search", name="q", id="searchbar")
-        button.search_container__search_button(type="submit") Search
+    form(action="/", method="get")
+      input.search_container__search_bar(type="search", name="q", id="searchbar")
+      button.search_container__search_button(type="submit") Search
