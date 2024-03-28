@@ -119,12 +119,15 @@ function fetchGithub(query, limit=1) {
 }
 
 function fetchYoutube(query, limit=1) {
+    // max allowed by youtubei = 20
+    const per_page = Number.isInteger(limit * 1) ? limit : 1;
+
     const youtube = new Client();
     return youtube.search(query, {
         type: "video",
     }).then(response => {
         // resolve({ 'youtube': response.items });
-        return ({ 'youtube': response.items });
+        return ({ 'youtube': response.items.slice(0, per_page) });
     }).catch(error => {
         // reject(error);
         throw error;
