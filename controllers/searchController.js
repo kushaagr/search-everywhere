@@ -120,7 +120,8 @@ function fetchGithub(query, limit=1) {
 
 function fetchYoutube(query, limit=1) {
     // max allowed by youtubei = 20
-    const per_page = Number.isInteger(limit * 1) ? limit : 1;
+    limit = limit * 1
+    const per_page = Number.isInteger(limit) ? limit : 1;
 
     const youtube = new Client();
     return youtube.search(query, {
@@ -131,6 +132,27 @@ function fetchYoutube(query, limit=1) {
     }).catch(error => {
         // reject(error);
         throw error;
+    });
+}
+
+function fetchReddit(query, limit=1) {
+    return new Promise( (resolve, reject) => {
+        limit = limit * 1;
+        const per_page = Number.isInteger(limit) ? limit : 1;
+
+        DDG.search(`site:www.reddit.com ${query}`, {
+          safeSearch: DDG.SafeSearchType.STRICT
+        }).then(searchResults => {
+            if (searchResults.noResults === true) {
+                const error =  new Error("No results for Reddit");
+                reject(error)
+            }
+            resolve({'reddit': searchResults.results.slice(0, per_page)});
+        }).catch(error => {
+            reject(error);
+        })
+
+
     });
 }
 
@@ -164,7 +186,7 @@ function deprecated_fetchYoutube(query, limit=1) {
     })
 }
 
-function fetchReddit(query, limit=1) {
+function deprecated_fetchReddit(query, limit=1) {
     return new Promise( (resolve, reject) => {
         limit = limit * 1;
         const per_page = Number.isInteger(limit) ? limit : 1;
@@ -173,7 +195,14 @@ function fetchReddit(query, limit=1) {
         redditSearchUrl.searchParams.append('limit', per_page);
         redditSearchUrl.searchParams.append('q', query);
 
-        axios.get(redditSearchUrl).then(response => {
+        const proxyConfig = {
+            // host: '103.19.59.158',
+            // port: 8082
+        };
+
+        axios.get(redditSearchUrl, {
+            // proxy: proxyConfig
+        }).then(response => {
             resolve({ 'reddit': response.data.data.children });
         }).catch(error => {
             reject(error);

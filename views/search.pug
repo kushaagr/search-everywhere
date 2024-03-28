@@ -53,18 +53,36 @@ html(lang="en")
             if searchresults.reddit
               each result in searchresults.reddit
                 li
-                  a.permalink.reddit-search-result-box(href="https://www.reddit.com"+result.data.permalink)
-                    if result.data.thumbnail != "self" && result.data.thumbnail != "default" && result.data.thumbnail != "spoiler"
-                      object.short-square-thumbnail(data=result.data.thumbnail)
+                  a.permalink.reddit-search-result-box(href=result.url)
+                    if result.icon
+                      object.short-square-thumbnail(data=result.icon)
                         img.short-square-thumbnail(src='https://freelogopng.com/images/all_img/1658834630reddit-logo%20(1).png')
                     else
                       img.no-img
-                    h3.title.title--reddit!= result.data.title
-                  span.pill= "r/"
-                    strong
-                      p.subreddit= result.data.subreddit
-                  if result.data.selftext
-                    p.selftext!= result.data.selftext
+                    h3.title.title--reddit!= result.title
+                  if result.bang.subreddit
+                    span.pill= "r/"
+                      strong
+                        p.subreddit= result.bang.subreddit  
+                  p.selftext!= result.description
+        //- section.long-narrow-container#rdt
+        //-   h2.container_title Reddit
+        //-   ul#reddit-results-list
+        //-     if searchresults.reddit
+        //-       each result in searchresults.reddit
+        //-         li
+        //-           a.permalink.reddit-search-result-box(href="https://www.reddit.com"+result.data.permalink)
+        //-             if result.data.thumbnail != "self" && result.data.thumbnail != "default" && result.data.thumbnail != "spoiler"
+        //-               object.short-square-thumbnail(data=result.data.thumbnail)
+        //-                 img.short-square-thumbnail(src='https://freelogopng.com/images/all_img/1658834630reddit-logo%20(1).png')
+        //-             else
+        //-               img.no-img
+        //-             h3.title.title--reddit!= result.data.title
+        //-           span.pill= "r/"
+        //-             strong
+        //-               p.subreddit= result.data.subreddit
+        //-           if result.data.selftext
+        //-             p.selftext!= result.data.selftext
         section.long-narrow-container#git
           h2.container_title Github
           ul#github-results-list
