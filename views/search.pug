@@ -40,10 +40,13 @@ html(lang="en")
             if searchresults.youtube
               each result in searchresults.youtube
                 li
-                  a.hyperlink_container(href="https://www.youtube.com/watch?v="+result.id.videoId)
-                    img.wide-broad-thumbnail(src=result.snippet.thumbnails.medium.url)
-                    h3.title= result.snippet.title
-                    p.description= result.snippet.description
+                  a.hyperlink_container(href="https://www.youtube.com/watch?v="+result.id)
+                    //- - console.log(result.thumbnails)
+                    - const thumbnail = result.thumbnails[1]?.url ?? result.thumbnails[0].url
+                    //- img.wide-broad-thumbnail(src=result.thumbnails[0].url)
+                    img.wide-broad-thumbnail(src=thumbnail,loading="lazy")
+                    h3.title= result.title
+                    p.description= result.description
         section.long-narrow-container#rdt
           h2.container_title Reddit
           ul#reddit-results-list

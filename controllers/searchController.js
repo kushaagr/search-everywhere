@@ -1,5 +1,6 @@
 import { spawn } from 'node:child_process';
 import DDG from 'duck-duck-scrape';
+import { Client } from 'youtubei';
 import axios from 'axios';
 import 'dotenv/config';
     
@@ -118,6 +119,20 @@ function fetchGithub(query, limit=1) {
 }
 
 function fetchYoutube(query, limit=1) {
+    const youtube = new Client();
+    return youtube.search(query, {
+        type: "video",
+    }).then(response => {
+        // resolve({ 'youtube': response.items });
+        return ({ 'youtube': response.items });
+    }).catch(error => {
+        // reject(error);
+        throw error;
+    });
+}
+
+
+function deprecated_fetchYoutube(query, limit=1) {
     return new Promise( (resolve, reject) => {
         limit = limit * 1;
         const per_page = Number.isInteger(limit) ? limit : 1;
