@@ -21,6 +21,9 @@ const search_results_get = (req, res, next) => {
     } else {
        // res.send(`Searching for: ${req.query.q}`);
         fetchResponse(req, res).then(result => {
+            for (const item of result['youtube']) {
+              delete item.channel;
+            }
             res.send(result);
         }).catch(next);
     }
