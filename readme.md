@@ -24,4 +24,4 @@ https://github.com/kushaagr/search-everywhere/assets/68564934/7f98d8a2-358e-4def
 
 
 ## Screenshots
-![chrome_1713362272](https://github.com/kushaagr/search-everywhere/assets/68564934/1b59cc8a-a799-4c8c-ad02-e339966d6880)
+![working demo](https://github.com/kushaagr/search-everywhere/assets/68564934/1b59cc8a-a799-4c8c-ad02-e339966d6880)
