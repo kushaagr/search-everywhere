@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js", 
     "devstart": "nodemon index.js",
     "watchcss": "npx tailwindcss -c ./frontend/tailwind.config.js -i ./frontend/input.css -o ./frontend/output.css --watch",
     "buildcss": "npx tailwindcss -c ./frontend/tailwind.config.js -i ./frontend/input.css -o ./frontend/output.css",
